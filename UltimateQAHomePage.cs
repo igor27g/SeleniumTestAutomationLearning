@@ -2,14 +2,11 @@
 
 namespace UnitTestProject1
 {
-	internal class UltimateQAHomePage
+	internal class UltimateQAHomePage : BaseSampleApplicationPage
 	{
-		private IWebDriver Driver { get; set; }
+		
 
-		public UltimateQAHomePage (IWebDriver driver)
-		{
-			Driver = Driver;
-		}
+		public UltimateQAHomePage (IWebDriver driver) : base(driver) {}
 
 		public bool IsVisible => StartHereButton.Displayed;
 

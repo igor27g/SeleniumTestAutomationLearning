@@ -3,14 +3,11 @@ using System;
 
 namespace UnitTestProject1
 {
-	internal class SampleApplicationPageTest
+	internal class SampleApplicationPageTest : BaseSampleApplicationPage
 	{
-		private IWebDriver Driver { get; set; }
+		
 
-		public SampleApplicationPageTest(IWebDriver driver)
-		{
-			Driver = driver;
-		}
+		public SampleApplicationPageTest(IWebDriver driver) : base(driver) { }
 
 		internal void maximizeWindow()
 		{

@@ -4,6 +4,7 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using NUnit;
 
 namespace UnitTestProject1
 {
@@ -24,7 +25,8 @@ namespace UnitTestProject1
 
 			var ultimateQAHomePage = sampleApplicationPage.FillOutFormAndSubmit("Igor");
 			Assert.IsTrue(ultimateQAHomePage.IsVisible);
-
+			Driver.Close();
+			Driver.Quit();
 		}
 
 		
