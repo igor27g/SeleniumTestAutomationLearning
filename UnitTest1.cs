@@ -13,23 +13,69 @@ namespace UnitTestProject1
 	public class SampleApplicationOneTest
 	{
 		private IWebDriver Driver { get; set; }
+		internal TestUser TheTestUser { get; private set; }
 
-		[TestMethod] 
+		[TestInitialize]
+		public void SetupForEverySingleTestMethod()
+		{
+			Driver = GetChromeDriver();
+			TheTestUser = new TestUser();
+			TheTestUser.FirstName = "Nikolay";
+			TheTestUser.LastName = "Blahzah";
+			TheTestUser.GenderType = Gender.Female;
+
+		}
+
+		[TestMethod]
+		[Description("Validate that user is able to fill out the form successfully using valid data.")]
 		public void Test1()
 		{
+			
+
 			Driver = GetChromeDriver();
 			var sampleApplicationPage = new SampleApplicationPageTest(Driver);
 			sampleApplicationPage.maximizeWindow();
 			sampleApplicationPage.GoTo();
-			//Assert.IsTrue(sampleApplicationPage.IsVisible);
 
-			var ultimateQAHomePage = sampleApplicationPage.FillOutFormAndSubmit("Igor");
-			Assert.IsTrue(ultimateQAHomePage.IsVisible);
+			var ultimateQAHomePage = sampleApplicationPage.FillOutFormAndSubmit(TheTestUser);
+			Assert.IsTrue(ultimateQAHomePage.IsVisible, "UltimateQA home page was not visible.");
+		}
+
+
+		[TestMethod]
+		[Description("Validate that user is able to fill out the form successfully using valid data.")]
+		public void PretendTestNumber2()
+		{
+			var sampleApplicationPage = new SampleApplicationPageTest(Driver);
+			sampleApplicationPage.maximizeWindow();
+			sampleApplicationPage.GoTo();
+			
+
+			var ultimateQAHomePage = sampleApplicationPage.FillOutFormAndSubmit(TheTestUser);
+			Assert.IsFalse(!ultimateQAHomePage.IsVisible, "UltimateQA home page was not visible.");			
+		}
+
+
+		[TestMethod]
+		
+		public void Test3()
+		{
+			var sampleApplicationPage = new SampleApplicationPageTest(Driver);
+			sampleApplicationPage.maximizeWindow();
+			sampleApplicationPage.GoTo();
+			var ultimateQAHomePage = sampleApplicationPage.FillOutFormAndSubmit(TheTestUser);
+
+
+		}
+		/*
+		[TestCleanup]
+		public void CleanUpAfterEveryTestMethod()
+		{
 			Driver.Close();
 			Driver.Quit();
 		}
-
-		
+		*/
+	
 
 		private IWebDriver GetChromeDriver()
 		{

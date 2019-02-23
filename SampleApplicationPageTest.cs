@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 
 namespace UnitTestProject1
@@ -14,31 +15,58 @@ namespace UnitTestProject1
 			Driver.Manage().Window.Maximize();
 		}
 
+		public IWebElement FirstNameField => Driver.FindElement(By.Name("firstname"));
+
+		public IWebElement SubmitButton => Driver.FindElement(By.CssSelector("//*[@type='submit']"));
+
+		public IWebElement LastNameField => Driver.FindElement(By.Name("lastname"));
+
+		public IWebElement FemaleGenderRadioButton => Driver.FindElement(By.XPath("[@id='post - 934']/div/form/input[2]"));
+
+		private string PageTitle => "Sample Application Lifecycle - Sprint 2 - Ultimate QA";
+
+
 		public bool IsVisible
 		{
 			get
 			{
-				return Driver.Title.Contains("Sample Application Lifecycle - Sprint 1 - Ultimate QA");
+				return Driver.Title.Contains(PageTitle);
 			}
 			internal set { }
 		}
 
-		public IWebElement FirstNameField => Driver.FindElement(By.Name("firstname"));
-
-		public IWebElement SubmitButton => Driver.FindElement(By.Id("submitForm"));
+		
 
 		internal void GoTo()
 		{
-			Driver.Navigate().GoToUrl("https://www.ultimateqa.com/sample-application-lifecycle-sprint-1/");
+			Driver.Navigate().GoToUrl("https://www.ultimateqa.com/sample-application-lifecycle-sprint-3/");
+			Assert.IsTrue(IsVisible, $"Sample application page was not visible. Expected =>{PageTitle}." + $"Actual => { Driver.Title}" );
 		}
 
-		internal UltimateQAHomePage FillOutFormAndSubmit(string firstName)
+		internal UltimateQAHomePage FillOutFormAndSubmit(TestUser user)
 		{
-
-			FirstNameField.SendKeys(firstName);
+			SetGender(user);
+			FirstNameField.SendKeys(user.FirstName);
+			LastNameField.SendKeys(user.LastName);
 			SubmitButton.Click();
+
+
+
 			return new UltimateQAHomePage(Driver);
 		}
 
-	}	
+		private void SetGender(TestUser user)
+		{
+			switch (user.GenderType)
+			{
+				case Gender.Male:
+					break;
+				case Gender.Female:
+					FemaleGenderRadioButton.Click();
+					break;
+				case Gender.Other:
+					break;
+			}
+		}
+	}
 }

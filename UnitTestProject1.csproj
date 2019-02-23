@@ -61,7 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSampleApplicationPage.cs" />
+    <Compile Include="Gender.cs" />
     <Compile Include="SampleApplicationPageTest.cs" />
+    <Compile Include="TestUser.cs" />
     <Compile Include="UltimateQAHomePage.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
